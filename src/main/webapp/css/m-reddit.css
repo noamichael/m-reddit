@@ -5,9 +5,22 @@
 .subreddit-comment-replies{
     margin-left: 1em;
 }
-.subreddit-comment-content.even{
-     background: #ccc;
+.subreddit-comment{
+    border-left: 1px solid gainsboro;
+    border-top: 1px solid gainsboro;
 }
-.subreddit-comment-content.odd{
-    background: #dbdbdb;
+.subreddit-comment.even{
+
+}
+.subreddit-comment.odd{
+  
+}
+.subreddit-comment-content{
+    padding: 1em;
+}
+.subreddit-comment-author{
+    float: left;
+}
+.subreddit-comment-body{
+    clear: both;
 }

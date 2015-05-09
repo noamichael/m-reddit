@@ -1,10 +1,10 @@
-<div class="subreddit-comment">
+<div class="subreddit-comment" ng-class-even="'even'" ng-class-odd="'odd'">
     <div class="subreddit-comment-content">
+        <div class="subreddit-comment-author">
+            {{comment.data.author}} -{{$middle}}
+        </div>
         <div class="subreddit-comment-body">
             {{comment.data.body}}
-        </div>
-        <div class="subreddit-comment-author">
-            by {{comment.data.author}}
         </div>
     </div>
     <div class="subreddit-comment-replies" 

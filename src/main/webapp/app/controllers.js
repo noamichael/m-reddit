@@ -40,7 +40,7 @@
         if (subredditTitle === "front-page") {
             getFrontPage();
         } else {
-            getSubreddit(subredditTitle);
+            getSubredditPosts(subredditTitle);
         }
         self.onPostClick = function (post) {
             if (post.data.is_self) {
@@ -58,8 +58,8 @@
         self.trust = function (src) {
             return $sce.trustAsResourceUrl(src);
         };
-        function getSubreddit(subreddit) {
-            SubredditService.getSubreddit(subreddit).success(function (response) {
+        function getSubredditPosts(subreddit) {
+            SubredditService.getSubredditPosts(subreddit).success(function (response) {
                 self.notFound = false;
                 self.posts = response.data.children;
             }).error(function () {
@@ -79,7 +79,15 @@
         var title = $stateParams.commentTitle;
         SubredditService.getComments(subreddit, id, title).success(function (response) {
             self.comments = response[1].data.children;
+            commentRecursiveTest(response[1].data.children);
         });
+        function commentRecursiveTest(comments) {
+            comments.forEach(function (comment) {
+                if (comment.data.replies) {
+                    commentRecursiveTest(comment.data.replies.data.children);
+                }
+            });
+        }
     }
     SubredditPaneCtrl.$inject = [
         "SubredditService",

@@ -20,7 +20,7 @@
         this.getSubreddits = function (config) {
             return $http.get(self.api.subreddits);
         };
-        this.getSubreddit = function (subreddit, config) {
+        this.getSubredditPosts = function (subreddit, config) {
             var url = self.api.base + "/r/" + subreddit + "/.json";
             return $http.get(url);
         };
