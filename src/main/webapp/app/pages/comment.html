@@ -1,0 +1,14 @@
+<div class="subreddit-comment">
+    <div class="subreddit-comment-content">
+        <div class="subreddit-comment-body">
+            {{comment.data.body}}
+        </div>
+        <div class="subreddit-comment-author">
+            by {{comment.data.author}}
+        </div>
+    </div>
+    <div class="subreddit-comment-replies" 
+         ng-repeat="comment in comment.data.replies.data.children"
+         ng-include="'app/pages/comment.html'">
+    </div>
+</div>

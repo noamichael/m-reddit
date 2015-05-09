@@ -1,0 +1,9 @@
+<div class="subreddit-post" ng-repeat="post in subredditCtrl.posts" ng-show="!subredditCtrl.notFound">
+    <a ng-click="subredditCtrl.onPostClick(post);">{{post.data.title}}</a>
+    <iframe ng-if="!post.data.is_self" ng-hide="true"></iframe>
+</div>
+<div ng-show="subredditCtrl.notFound">
+    <div class="alert alert-danger" role="alert">
+        404 - Subreddit not found.
+    </div>
+</div>

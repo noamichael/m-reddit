@@ -1,0 +1,13 @@
+/* 
+    Created on : May 9, 2015, 2:32:07 PM
+    Author     : Michael Kucinski
+*/
+.subreddit-comment-replies{
+    margin-left: 1em;
+}
+.subreddit-comment-content.even{
+     background: #ccc;
+}
+.subreddit-comment-content.odd{
+    background: #dbdbdb;
+}
