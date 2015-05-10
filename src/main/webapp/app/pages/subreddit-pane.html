@@ -1,17 +1,13 @@
-<div class="col-sm-12 col-md-12 col-lg-12">
-    <h1>Subreddits</h1>
-    <div class="row">
-        <div class="col-sm-2 col-md-2 col-lg-2">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"
-                    ng-class="{'active': subredditPaneCtrl.isSubredditActive(subreddit)}"
-                    ng-repeat="subreddit in subredditPaneCtrl.subreddits">
-                    <a ng-click="subredditPaneCtrl.onSubredditClick(subreddit)">{{subreddit.data.url}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-sm-10 col-md-10 col-lg-10">
-            <div ui-view=""></div>
-        </div>
-    </div>
+<div class="fixed-subreddit-nav">
+    <h3>Default Subreddits</h3>
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"
+            ng-class="{'active': subredditPaneCtrl.isSubredditActive(subreddit)}"
+            ng-repeat="subreddit in subredditPaneCtrl.subreddits">
+            <a ng-click="subredditPaneCtrl.onSubredditClick(subreddit)">{{subreddit.data.url}}</a>
+        </li>
+    </ul>
 </div>
+<div class="fixed-subreddit-pane">
+    <div ui-view=""></div>
+</div>    

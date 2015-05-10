@@ -10,6 +10,16 @@
     </div>
     <div class="clearfix"></div>
 </div>
+<div class="row">
+    <div class="subreddit-pagination text-center">
+        <a class="subreddit-pagination-prev" ng-show="subredditCtrl.canPageLeft()" ng-click="subredditCtrl.pageLeft();">
+            &laquo; prev
+        </a>
+        <a class="subreddit-pagination-next" ng-click="subredditCtrl.pageRight();">
+            next &raquo; {{subredditCtrl.after}}
+        </a>
+    </div>
+</div>
 <div ng-show="subredditCtrl.notFound">
     <div class="alert alert-danger" role="alert">
         404 - Subreddit not found.

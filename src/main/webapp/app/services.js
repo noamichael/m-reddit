@@ -22,6 +22,11 @@
         };
         this.getSubredditPosts = function (subreddit, config) {
             var url = self.api.base + "/r/" + subreddit + "/.json";
+            if (!config) {
+                config = {};
+            }
+            config.items = 25;
+            url += commonUtils.buildQueryString(config);
             return $http.get(url);
         };
         this.getComments = function (subreddit, id, title, config) {

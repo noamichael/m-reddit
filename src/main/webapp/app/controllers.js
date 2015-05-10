@@ -33,6 +33,7 @@
     }
     function SubredditController(SubredditService, $state, $stateParams, $modal) {
         var self = this;
+        self.itemsLoaded = 25;
         var subredditTitle = $stateParams.subreddit;
         if (!subredditTitle || subredditTitle === "") {
             $state.go($state.current, {subreddit: "front-page"}, {reload: true});
@@ -63,6 +64,19 @@
             return SubredditService.getThumbnailSrc(src);
         };
 
+        self.pageLeft = function () {
+            self.itemsLoaded -= 25;
+            getSubredditPosts(self.currentSubreddit, {before: self.pageSlice, count: self.itemsLoaded});
+        };
+        self.pageRight = function () {
+            self.itemsLoaded += 25;
+            getSubredditPosts(self.currentSubreddit, {after: self.pageSlice, count: self.itemsLoaded});
+        };
+        self.canPageLeft = function(){
+            return self.itemsLoaded > 25;
+        };
+
+
         function goToComments(post) {
             var permalink = post.data.permalink;
             var subreddit = post.data.subreddit;
@@ -71,10 +85,12 @@
             $state.go("app.subreddit.comments", {subreddit: subreddit, commentId: id, commentTitle: title});
         }
 
-        function getSubredditPosts(subreddit) {
-            SubredditService.getSubredditPosts(subreddit).success(function (response) {
+        function getSubredditPosts(subreddit, config) {
+            self.currentSubreddit = subreddit;
+            SubredditService.getSubredditPosts(subreddit, config).success(function (response) {
                 self.notFound = false;
                 self.posts = response.data.children;
+                self.pageSlice = response.data.after ? response.data.after : response.data.before;
             }).error(function () {
                 self.notFound = true;
             });
