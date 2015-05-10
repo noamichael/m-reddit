@@ -2,6 +2,13 @@
     Created on : May 9, 2015, 2:32:07 PM
     Author     : Michael Kucinski
 */
+.subreddit-post-frame-container,.subreddit-post-frame{
+    display: block;
+    width: 100%;
+    height: 1000px;
+}
+.subreddit-post-nsfw{
+}
 .subreddit-comment-replies{
     margin-left: 1em;
 }
@@ -13,7 +20,7 @@
 
 }
 .subreddit-comment.odd{
-  
+
 }
 .subreddit-comment-content{
     padding: 1em;

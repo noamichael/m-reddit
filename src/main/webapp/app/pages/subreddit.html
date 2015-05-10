@@ -1,6 +1,6 @@
 <div class="subreddit-post" ng-repeat="post in subredditCtrl.posts" ng-show="!subredditCtrl.notFound">
     <a ng-click="subredditCtrl.onPostClick(post);">{{post.data.title}}</a>
-    <iframe ng-if="!post.data.is_self" ng-hide="true"></iframe>
+    <span class="subreddit-post-nsfw label label-danger" ng-show="post.data.over_18">[NSFW]</span>
 </div>
 <div ng-show="subredditCtrl.notFound">
     <div class="alert alert-danger" role="alert">

@@ -1,5 +1,5 @@
 (function (angular) {
-    var app = angular.module("m-reddit", ["ui.router", "ui.bootstrap"]);
+    var app = angular.module("m-reddit", ["ui.router", "ui.bootstrap","ngSanitize"]);
     app.config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/r/front-page");
         //

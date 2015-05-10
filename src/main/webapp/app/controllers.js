@@ -4,6 +4,7 @@
     app.controller("SubredditPaneCtrl", SubredditPaneCtrl);
     app.controller("SubredditCtrl", SubredditController);
     app.controller("CommentsCtrl", CommentsController);
+    app.controller("PostModalCtrl", PostModalCtrl);
 
     function AppController(AuthService) {
         var vm = this;
@@ -30,7 +31,7 @@
             });
         }
     }
-    function SubredditController(SubredditService, $state, $stateParams, $sce) {
+    function SubredditController(SubredditService, $state, $stateParams, $modal) {
         var self = this;
         var subredditTitle = $stateParams.subreddit;
         if (!subredditTitle || subredditTitle === "") {
@@ -42,6 +43,7 @@
         } else {
             getSubredditPosts(subredditTitle);
         }
+
         self.onPostClick = function (post) {
             if (post.data.is_self) {
                 var permalink = post.data.permalink;
@@ -50,14 +52,16 @@
                 var title = permalink.substring(permalink.indexOf(id) + id.length + 1, permalink.length - 1);
                 $state.go("app.subreddit.comments", {subreddit: subreddit, commentId: id, commentTitle: title});
             } else {
-
-
+                if (!post.lazyLoadedSource) {
+                    post.lazyLoadedSource = post.data.url;
+                }
+                var modal = createPostContentModal(post);
+                modal.result.then(function (post) {
+                    console.log("Post closed: " + post);
+                });
             }
-            post.lazyLoadedSource = post.data.url;
         };
-        self.trust = function (src) {
-            return $sce.trustAsResourceUrl(src);
-        };
+
         function getSubredditPosts(subreddit) {
             SubredditService.getSubredditPosts(subreddit).success(function (response) {
                 self.notFound = false;
@@ -71,6 +75,22 @@
                 self.posts = response.data.children;
             });
         }
+        function createPostContentModal(post) {
+            return $modal.open({
+                animation: true,
+                templateUrl: 'app/pages/external-post-content.html',
+                controller: 'PostModalCtrl',
+                controllerAs: "postModalCtrl",
+                size: "lg",
+                backdropClass : "subreddit-post-modal",
+                resolve: {
+                    post: function () {
+                        return post;
+                    }
+                }
+            });
+        }
+
     }
     function CommentsController(SubredditService, $state, $stateParams) {
         var self = this;
@@ -78,8 +98,8 @@
         var id = $stateParams.commentId;
         var title = $stateParams.commentTitle;
         SubredditService.getComments(subreddit, id, title).success(function (response) {
+            self.selfPost = response[0].data.children[0].data;
             self.comments = response[1].data.children;
-            commentRecursiveTest(response[1].data.children);
         });
         function commentRecursiveTest(comments) {
             comments.forEach(function (comment) {
@@ -89,6 +109,17 @@
             });
         }
     }
+
+    function PostModalCtrl($modalInstance, $sce, post) {
+        var self = this;
+        self.post = post;
+        self.ok = function () {
+            $modalInstance.close(post);
+        };
+        self.src = function (src) {
+            return $sce.trustAsResourceUrl(src);
+        };
+    }
     SubredditPaneCtrl.$inject = [
         "SubredditService",
         "$state"
@@ -97,7 +128,7 @@
         "SubredditService",
         "$state",
         "$stateParams",
-        "$sce"
+        "$modal"
     ];
     CommentsController.$inject = [
         "SubredditService",

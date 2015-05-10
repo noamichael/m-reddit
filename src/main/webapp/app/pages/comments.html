@@ -1,3 +1,20 @@
+<div class="subreddit-self-post-content panel panel-default">
+    <div class="panel-heading">
+        {{commentsCtrl.selfPost.title}}
+    </div>
+    <div class="panel-body">
+        {{commentsCtrl.selfPost.selftext}}
+    </div>
+</div>
+<div class="subreddit-comment-reply-box panel panel-default">
+    <div class="panel-heading">
+        Reply
+    </div>
+    <div class="panel-body">
+        <textarea class="form-control"></textarea>
+        <input class="form-control" value="Submit">
+    </div>
+</div>
 <div class="subreddit-comment-replies" 
      ng-repeat="comment in ::commentsCtrl.comments"
      ng-include="'app/pages/comment.html'">
