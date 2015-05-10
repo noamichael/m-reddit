@@ -1,6 +1,10 @@
 <div class="subreddit-post" ng-repeat="post in subredditCtrl.posts" ng-show="!subredditCtrl.notFound">
-    <a ng-click="subredditCtrl.onPostClick(post);">{{post.data.title}}</a>
+    <img class="subreddit-post-thumbnail" alt="{{post.data.title}} thumbnail" ng-src="{{post.data.thumbnail === 'self' ? '' : post.data.thumbnail}}">
+    <a class="subreddit-post-link" ng-click="subredditCtrl.onPostClick(post);">{{post.data.title}}</a>
     <span class="subreddit-post-nsfw label label-danger" ng-show="post.data.over_18">[NSFW]</span>
+    <div class="subreddit-post-metadata">
+        By {{post.data.author}} {{post.data.author_flair_text}} - <a class="subreddit-post-comment-link">{{post.data.num_comments}} comments</a>
+    </div>
 </div>
 <div ng-show="subredditCtrl.notFound">
     <div class="alert alert-danger" role="alert">

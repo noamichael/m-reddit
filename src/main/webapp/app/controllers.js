@@ -81,8 +81,7 @@
                 templateUrl: 'app/pages/external-post-content.html',
                 controller: 'PostModalCtrl',
                 controllerAs: "postModalCtrl",
-                size: "lg",
-                backdropClass : "subreddit-post-modal",
+                windowClass : "subreddit-post-modal",
                 resolve: {
                     post: function () {
                         return post;
