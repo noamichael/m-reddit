@@ -12,6 +12,9 @@ a{
     padding: 1em;
     border-bottom: 1px solid gainsboro;
 }
+.clearfix{
+    clear: both;
+}
 .subreddit-post-frame-container,.subreddit-post-frame{
     display: block;
     width: 100%;

@@ -46,21 +46,30 @@
 
         self.onPostClick = function (post) {
             if (post.data.is_self) {
-                var permalink = post.data.permalink;
-                var subreddit = post.data.subreddit;
-                var id = post.data.id;
-                var title = permalink.substring(permalink.indexOf(id) + id.length + 1, permalink.length - 1);
-                $state.go("app.subreddit.comments", {subreddit: subreddit, commentId: id, commentTitle: title});
+                goToComments(post);
             } else {
                 if (!post.lazyLoadedSource) {
                     post.lazyLoadedSource = post.data.url;
                 }
                 var modal = createPostContentModal(post);
                 modal.result.then(function (post) {
-                    console.log("Post closed: " + post);
                 });
             }
         };
+        self.onCommentClick = function (post) {
+            goToComments(post);
+        };
+        self.getThumbnailSrc = function (src) {
+            return SubredditService.getThumbnailSrc(src);
+        };
+
+        function goToComments(post) {
+            var permalink = post.data.permalink;
+            var subreddit = post.data.subreddit;
+            var id = post.data.id;
+            var title = permalink.substring(permalink.indexOf(id) + id.length + 1, permalink.length - 1);
+            $state.go("app.subreddit.comments", {subreddit: subreddit, commentId: id, commentTitle: title});
+        }
 
         function getSubredditPosts(subreddit) {
             SubredditService.getSubredditPosts(subreddit).success(function (response) {
@@ -81,7 +90,7 @@
                 templateUrl: 'app/pages/external-post-content.html',
                 controller: 'PostModalCtrl',
                 controllerAs: "postModalCtrl",
-                windowClass : "subreddit-post-modal",
+                windowClass: "subreddit-post-modal",
                 resolve: {
                     post: function () {
                         return post;

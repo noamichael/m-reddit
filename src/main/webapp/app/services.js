@@ -28,6 +28,18 @@
             var url = self.api.base + "/r/" + subreddit + "/comments/" + id + "/" + title + "/.json";
             return $http.get(url);
         };
+        this.getThumbnailSrc = function (thumbnail) {
+            switch (thumbnail) {
+                case "self":
+                    return "img/self-post.png";
+                case "default":
+                    return "img/default-post.png";
+                case "nsfw":
+                    return "img/nsfw-post.png";
+                default:
+                    return thumbnail;
+            }
+        };
 
     }
     SubredditService.$inject = ["$http"];
